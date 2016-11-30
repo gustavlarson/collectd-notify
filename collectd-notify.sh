@@ -14,8 +14,33 @@ data () {
   echo "$NOTIFICATION" | grep "${1}: " | sed "s/^${1}: \(.*\)$/\1/"
 }
 
-TITLE="$(data Severity): $(data Host)"
-TEXT="$(data Type) $(data TypeInstance) has reached $(data CurrentValue)"
+SEVERITY=$(data Severity)
+HOST=$(data Host)
+PLUGIN=$(data Plugin)
+TYPE=$(data Type)
+TYPEINSTANCE=$(data TypeInstance)
+DATASOURCE=$(data DataSource)
+VALUE=$(data CurrentValue)
+
+TITLE="${SEVERITY}: ${HOST} ${PLUGIN}"
+
+case $PLUGIN in
+  entropy)
+    TEXT="entropy has reached ${VALUE}."
+    ;;
+  memory)
+    # Convert bytes to Mb
+    VALUE="$(echo "${VALUE}/(1024*1024)" | bc)"
+    TEXT="$(data TypeInstance) memory has reached ${VALUE} Mb."
+    ;;
+  load)
+    VALUE=$(printf "%.2f" ${VALUE})
+    TEXT="${DATASOURCE} load has reached ${VALUE}."
+    ;;
+  *)
+    TEXT="${TYPE} ${TYPEINSTANCE} ${DATASOURCE} has reached ${VALUE}."
+    ;;
+esac
 
 
 #
