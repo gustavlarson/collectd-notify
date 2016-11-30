@@ -17,7 +17,21 @@ The exec plugin is configured with a username (to run the script), path to the s
 ```
 LoadPlugin exec
 <Plugin exec>
-        NotificationExec username "/usr/local/bin/collectd-notify.sh" "myKey"
+  NotificationExec username "/usr/local/bin/collectd-notify.sh" "myKey"
 </Plugin>
 ```
 
+The [threshold](https://collectd.org/wiki/index.php/Plugin:threshold) plugin must also be loaded and configured in order to generate notifications.
+More information can be found on [collectd-threshold(5)](https://collectd.org/documentation/manpages/collectd-threshold.5.shtml) man page.
+
+The following configuration example configures a warning notification to be sent if the load (midterm) gets above 3, and a failure notification is sent if the load gets above 5.
+```
+LoadPlugin threshold
+<Plugin threshold>
+  <Type load>
+    DataSource midterm
+    WarningMax 3
+    FailureMax 5
+  </Type>
+</Plugin>
+```
