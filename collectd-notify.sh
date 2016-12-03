@@ -21,6 +21,7 @@ TYPE=$(data Type)
 TYPEINSTANCE=$(data TypeInstance)
 DATASOURCE=$(data DataSource)
 VALUE=$(data CurrentValue)
+VALUE=$(printf "%.f" ${VALUE})
 
 TITLE="${SEVERITY}: ${HOST} ${PLUGIN}"
 
