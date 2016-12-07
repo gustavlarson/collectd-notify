@@ -6,6 +6,7 @@ Implemented as a bash script
 ## Requirements
 * bash
 * curl
+* [GNU bc](https://www.gnu.org/software/bc/) or some other POSIX-compatible version of bc.
 
 ## Installation
 Install the script in any location
